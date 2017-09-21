@@ -448,7 +448,6 @@ install_cleanup(){
     rm -rf manyuser.zip shadowsocksr-manyuser libsodium-1.0.13.tar.gz libsodium-1.0.13
 }
 
-
 # Uninstall ShadowsocksR
 uninstall_shadowsocksr(){
     printf "Are you sure uninstall ShadowsocksR? (y/n)"
