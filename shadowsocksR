@@ -16,6 +16,8 @@
 
 NAME=ShadowsocksR
 BIN=/usr/local/shadowsocks/server.py
+python_ver=$(ls /usr/bin|grep -e "^python[23]\.[1-9]\+$"|tail -1)
+
 if [ -f /etc/shadowsocks-r/config.json ]; then
     CONF=/etc/shadowsocks-r/config.json
 elif [ -f /etc/shadowsocks.json ]; then
@@ -38,7 +40,8 @@ do_start(){
         echo "$NAME (pid $PID) is already running..."
         exit 0
     else
-        $BIN -c $CONF -d start
+    	ulimit -n 512000
+        ${python_ver} $BIN -c $CONF -d start
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
             echo "Starting $NAME success"
@@ -51,7 +54,7 @@ do_start(){
 do_stop(){
     check_running
     if [ $? -eq 0 ]; then
-        $BIN -c $CONF -d stop
+        ${python_ver} $BIN -c $CONF -d stop
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
             echo "Stopping $NAME success"
