@@ -1,4 +1,4 @@
-https://github.com/jkingben/shadowsocks_install/wiki
+Wiki说明：https://github.com/jkingben/shadowsocks_install/wiki
 
 
 ![Shadowsocks](https://github.com/teddysun/shadowsocks_install/raw/master/shadowsocks.png)
