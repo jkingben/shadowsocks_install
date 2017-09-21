@@ -1,3 +1,6 @@
+https://github.com/jkingben/shadowsocks_install/wiki
+
+
 ![Shadowsocks](https://github.com/teddysun/shadowsocks_install/raw/master/shadowsocks.png)
 # Auto install Shadowsocks Server
 
