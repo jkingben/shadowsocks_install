@@ -12,11 +12,11 @@ export PATH
 # Current folder
 cur_dir=`pwd`
 
-libsodium_file="libsodium-1.0.13"
-libsodium_url="https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz"
+libsodium_file="libsodium-1.0.16"
+libsodium_url="https://github.com/jedisct1/libsodium/releases/download/1.0.16/libsodium-1.0.16.tar.gz"
 
 mbedtls_file="mbedtls-2.6.0"
-mbedtls_url="http://dl.teddysun.com/files/mbedtls-2.6.0-gpl.tgz"
+mbedtls_url="https://tls.mbed.org/download/mbedtls-2.6.0-gpl.tgz"
 
 # Stream Ciphers
 ciphers=(
@@ -234,24 +234,22 @@ pre_install(){
     # Set shadowsocks-libev config port
     while true
     do
-    echo -e "Please input port for shadowsocks-libev [1-65535]:"
-    read -p "(Default port: 8989):" shadowsocksport
-    [ -z "$shadowsocksport" ] && shadowsocksport="8989"
+    dport=$(shuf -i 9000-19999 -n 1)
+    echo -e "Please enter a port for shadowsocks-libev [1-65535]"
+    read -p "(Default port: ${dport}):" shadowsocksport
+    [ -z "$shadowsocksport" ] && shadowsocksport=${dport}
     expr ${shadowsocksport} + 1 &>/dev/null
     if [ $? -eq 0 ]; then
-        if [ ${shadowsocksport} -ge 1 ] && [ ${shadowsocksport} -le 65535 ]; then
+        if [ ${shadowsocksport} -ge 1 ] && [ ${shadowsocksport} -le 65535 ] && [ ${shadowsocksport:0:1} != 0 ]; then
             echo
             echo "---------------------------"
             echo "port = ${shadowsocksport}"
             echo "---------------------------"
             echo
             break
-        else
-            echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
         fi
-    else
-        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
     fi
+    echo -e "[${red}Error${plain}] Please enter a correct number [1-65535]"
     done
 
     # Set shadowsocks config stream ciphers
@@ -266,11 +264,11 @@ pre_install(){
     [ -z "$pick" ] && pick=1
     expr ${pick} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
-        echo -e "[${red}Error${plain}] Input error, please input a number"
+        echo -e "[${red}Error${plain}] Please enter a number"
         continue
     fi
     if [[ "$pick" -lt 1 || "$pick" -gt ${#ciphers[@]} ]]; then
-        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and ${#ciphers[@]}"
+        echo -e "[${red}Error${plain}] Please enter a number between 1 and ${#ciphers[@]}"
         continue
     fi
     shadowsockscipher=${ciphers[$pick-1]}
@@ -286,17 +284,10 @@ pre_install(){
     echo "Press any key to start...or press Ctrl+C to cancel"
     char=`get_char`
 
-    # Check jessie in source.list
-    if debianversion 7; then
-        grep "jessie" /etc/apt/sources.list > /dev/null 2>&1
-        if [ $? -ne 0 ] && [ -r /etc/apt/sources.list ]; then
-            echo "deb http://http.us.debian.org/debian jessie main" >> /etc/apt/sources.list
-        fi
-    fi
     # Update System
     apt-get -y update
     # Install necessary dependencies
-    apt-get -y --no-install-recommends install gettext build-essential autoconf automake libtool openssl libssl-dev zlib1g-dev libpcre3-dev libudns-dev libev-dev libc-ares-dev
+    apt-get -y --no-install-recommends install gettext build-essential autoconf automake libtool openssl libssl-dev zlib1g-dev libpcre3-dev libev-dev libc-ares-dev
 }
 
 download() {
