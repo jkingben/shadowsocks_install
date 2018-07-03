@@ -15,9 +15,13 @@
 # Author: Teddysun <i@teddysun.com>
 
 NAME=ShadowsocksR
+<<<<<<< HEAD
 BIN=/usr/local/shadowsocks/server.py
 python_ver=$(ls /usr/bin|grep -e "^python[23]\.[1-9]\+$"|tail -1)
 
+=======
+DAEMON=/usr/local/shadowsocks/server.py
+>>>>>>> pr/4
 if [ -f /etc/shadowsocks-r/config.json ]; then
     CONF=/etc/shadowsocks-r/config.json
 elif [ -f /etc/shadowsocks.json ]; then
@@ -26,8 +30,8 @@ fi
 RETVAL=0
 
 check_running(){
-    PID=`ps -ef | grep -v grep | grep -i "${BIN}" | awk '{print $2}'`
-    if [ ! -z "$PID" ]; then
+    PID=$(ps -ef | grep -v grep | grep -i "${DAEMON}" | awk '{print $2}')
+    if [ -n "$PID" ]; then
         return 0
     else
         return 1
@@ -40,8 +44,12 @@ do_start(){
         echo "$NAME (pid $PID) is already running..."
         exit 0
     else
+<<<<<<< HEAD
     	ulimit -n 512000
         ${python_ver} $BIN -c $CONF -d start
+=======
+        $DAEMON -c $CONF -d start
+>>>>>>> pr/4
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
             echo "Starting $NAME success"
@@ -54,7 +62,11 @@ do_start(){
 do_stop(){
     check_running
     if [ $? -eq 0 ]; then
+<<<<<<< HEAD
         ${python_ver} $BIN -c $CONF -d stop
+=======
+        $DAEMON -c $CONF -d stop
+>>>>>>> pr/4
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
             echo "Stopping $NAME success"
@@ -79,6 +91,7 @@ do_status(){
 
 do_restart(){
     do_stop
+    sleep 0.5
     do_start
 }
 
