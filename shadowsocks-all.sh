@@ -52,9 +52,13 @@ shadowsocks_python_debian="https://raw.githubusercontent.com/jkingben/shadowsock
 
 shadowsocks_r_file="shadowsocksr-3.2.2"
 <<<<<<< HEAD
+<<<<<<< HEAD
 shadowsocks_r_url="https://github.com/jkingben/shadowsocksr/archive/3.2.2.tar.gz"
 =======
 shadowsocks_r_url="https://github.com/shadowsocksrr/shadowsocksr/archive/3.2.2.tar.gz"
+>>>>>>> pr/4
+=======
+shadowsocks_r_url="https://github.com/jkingben/shadowsocksr/archive/3.2.2.tar.gz"
 >>>>>>> pr/4
 shadowsocks_r_init="/etc/init.d/shadowsocks-r"
 shadowsocks_r_config="/etc/shadowsocks-r/config.json"

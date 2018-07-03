@@ -21,6 +21,11 @@ echo
 
 libsodium_file="libsodium-1.0.16"
 libsodium_url="https://github.com/jedisct1/libsodium/releases/download/1.0.16/libsodium-1.0.16.tar.gz"
+<<<<<<< HEAD
+=======
+shadowsocks_r_file="shadowsocksr-3.2.2"
+shadowsocks_r_url="https://github.com/jkingben/shadowsocksr/archive/3.2.2.tar.gz"
+>>>>>>> pr/4
 
 #Current folder
 cur_dir=`pwd`
